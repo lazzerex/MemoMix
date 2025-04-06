@@ -31,7 +31,8 @@ export default function Game({ difficulty }) {
 
   // Generate card symbols (emojis)
   const generateCards = () => {
-    const emojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🦁', '🐯', '🦄', '🐝', '🦋', '🐢', '🦖', '🦕'];
+    // Modern themed emojis
+    const emojis = ['🚀', '🎮', '🔮', '💎', '🌈', '🎨', '🎧', '🎭', '🏆', '⚡', '🔥', '❄️', '🌟', '🍦', '🧩', '🎯'];
     const pairsCount = cardCount / 2;
     const selectedEmojis = emojis.slice(0, pairsCount);
     
@@ -142,25 +143,63 @@ export default function Game({ difficulty }) {
     setTimerRunning(true);
   };
 
+  // Calculate score based on time and moves
+  const calculateScore = () => {
+    const baseScore = 1000;
+    const timeDeduction = Math.floor(timer * 0.5);
+    const movesDeduction = moves * 10;
+    const finalScore = Math.max(0, baseScore - timeDeduction - movesDeduction);
+    return finalScore;
+  };
+
   return (
     <div className={styles.gameContainer}>
       <div className={styles.gameInfo}>
-        <div className={styles.stats}>
-          <div>Moves: {moves}</div>
-          <div>Time: {formatTime(timer)}</div>
+        <div className={styles.gameStats}>
+          <div className={styles.statCard}>
+            <div className={styles.statIcon}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="1 12 5 16 9 12"></polyline>
+                <path d="M5 16V4"></path>
+                <line x1="15" y1="4" x2="15" y2="20"></line>
+                <polyline points="19 8 23 12 19 16"></polyline>
+              </svg>
+            </div>
+            <div className={styles.statValue}>{moves}</div>
+            <div className={styles.statLabel}>Moves</div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statIcon}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div className={styles.statValue}>{formatTime(timer)}</div>
+            <div className={styles.statLabel}>Time</div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statIcon}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <div className={styles.statValue}>{Math.round(solved.length / 2)}/{cardCount / 2}</div>
+            <div className={styles.statLabel}>Pairs</div>
+          </div>
         </div>
         <button className={styles.restartButton} onClick={restartGame}>
-          Restart Game
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+           
+            <path d="M2.5 12c0 5 4 9 9 9 3.1 0 5.9-1.6 7.5-4"></path>
+            <path d="M20.3 15.5c.4-1.1.7-2.3.7-3.5 0-5-4-9-9-9-3.1 0-5.9 1.6-7.5 4"></path>
+            <path d="M2.5 2v6h6"></path>
+          </svg>
+          Restart
         </button>
       </div>
-      
-      {gameComplete && (
-        <div className={styles.gameComplete}>
-          <h2>Congratulations!</h2>
-          <p>You completed the game in {moves} moves and {formatTime(timer)}.</p>
-          <button onClick={restartGame}>Play Again</button>
-        </div>
-      )}
       
       <div 
         className={styles.gameBoard} 
@@ -181,6 +220,32 @@ export default function Game({ difficulty }) {
           />
         ))}
       </div>
+      
+      {gameComplete && (
+        <div className={styles.gameCompleteModal}>
+          <div className={styles.modalContent}>
+            <div className={styles.confetti}>🎉</div>
+            <h2>Congratulations!</h2>
+            <div className={styles.scoreBoard}>
+              <div className={styles.scoreItem}>
+                <span>Time</span>
+                <span className={styles.scoreValue}>{formatTime(timer)}</span>
+              </div>
+              <div className={styles.scoreItem}>
+                <span>Moves</span>
+                <span className={styles.scoreValue}>{moves}</span>
+              </div>
+              <div className={styles.scoreItem}>
+                <span>Score</span>
+                <span className={styles.scoreValue}>{calculateScore()}</span>
+              </div>
+            </div>
+            <div className={styles.actionButtons}>
+              <button className={styles.playAgainBtn} onClick={restartGame}>Play Again</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
