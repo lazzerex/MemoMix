@@ -35,12 +35,12 @@ export default function Game({ difficulty }) {
     const emojis = ['🚀', '🎮', '🔮', '💎', '🌈', '🎨', '🎧', '🎭', '🏆', '⚡', '🔥', '❄️', '🌟', '🍦', '🧩', '🎯'];
     const pairsCount = cardCount / 2;
     const selectedEmojis = emojis.slice(0, pairsCount);
-    
+
     const cardPairs = selectedEmojis.flatMap(emoji => [
       { id: `${emoji}-1`, type: emoji, flipped: false, solved: false },
       { id: `${emoji}-2`, type: emoji, flipped: false, solved: false }
     ]);
-    
+
     // Shuffle cards
     return cardPairs.sort(() => Math.random() - 0.5);
   };
@@ -66,7 +66,7 @@ export default function Game({ difficulty }) {
         setTimer(prevTimer => prevTimer + 1);
       }, 1000);
     }
-    
+
     return () => clearInterval(interval);
   }, [timerRunning]);
 
@@ -81,32 +81,32 @@ export default function Game({ difficulty }) {
   // Handle card click
   const handleCardClick = (id) => {
     if (disabled) return;
-    
+
     // Don't allow same card to be clicked twice
     if (flipped.includes(id)) return;
-    
+
     // Don't allow already solved cards to be flipped
     if (solved.includes(id)) return;
-    
+
     const newFlipped = [...flipped, id];
     setFlipped(newFlipped);
-    
+
     // If this is the first card flipped, continue
     if (flipped.length === 0) {
       return;
     }
-    
+
     // If this is the second card
     if (flipped.length === 1) {
       setDisabled(true);
       setMoves(prevMoves => prevMoves + 1);
-      
+
       // Get both flipped cards
       const firstCardId = flipped[0];
       const secondCardId = id;
       const firstCard = cards.find(card => card.id === firstCardId);
       const secondCard = cards.find(card => card.id === secondCardId);
-      
+
       // Check if they match
       if (firstCard.type === secondCard.type) {
         // Cards match - add to solved
@@ -157,12 +157,17 @@ export default function Game({ difficulty }) {
       <div className={styles.gameInfo}>
         <div className={styles.gameStats}>
           <div className={styles.statCard}>
+
+
             <div className={styles.statIcon}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="1 12 5 16 9 12"></polyline>
-                <path d="M5 16V4"></path>
-                <line x1="15" y1="4" x2="15" y2="20"></line>
-                <polyline points="19 8 23 12 19 16"></polyline>
+                {/* Up Arrow */}
+                <polyline points="1 12 5 8 9 12" />
+                <path d="M5 8v12" />
+
+                {/* Down Arrow */}
+                <polyline points="15 12 19 16 23 12" />
+                <path d="M19 16V4" />
               </svg>
             </div>
             <div className={styles.statValue}>{moves}</div>
@@ -192,7 +197,7 @@ export default function Game({ difficulty }) {
         </div>
         <button className={styles.restartButton} onClick={restartGame}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-           
+
             <path d="M2.5 12c0 5 4 9 9 9 3.1 0 5.9-1.6 7.5-4"></path>
             <path d="M20.3 15.5c.4-1.1.7-2.3.7-3.5 0-5-4-9-9-9-3.1 0-5.9 1.6-7.5 4"></path>
             <path d="M2.5 2v6h6"></path>
@@ -200,10 +205,10 @@ export default function Game({ difficulty }) {
           Restart
         </button>
       </div>
-      
-      <div 
-        className={styles.gameBoard} 
-        style={{ 
+
+      <div
+        className={styles.gameBoard}
+        style={{
           gridTemplateColumns: `repeat(${cols}, 1fr)`,
           gridTemplateRows: `repeat(${rows}, 1fr)`
         }}
@@ -220,7 +225,7 @@ export default function Game({ difficulty }) {
           />
         ))}
       </div>
-      
+
       {gameComplete && (
         <div className={styles.gameCompleteModal}>
           <div className={styles.modalContent}>
