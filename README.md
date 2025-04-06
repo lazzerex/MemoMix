@@ -1,3 +1,5 @@
+Try it here: https://memomix.vercel.app/
+
 ![image](https://github.com/user-attachments/assets/9b87917a-7452-4871-a907-d3312fe2b203)
 
 
