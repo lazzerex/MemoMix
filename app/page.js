@@ -17,7 +17,7 @@ export default function Home() {
       <main>
         {!gameStarted ? (
           <div className="menu-container">
-            <h1 className="title">Memory Match</h1>
+            <h1 className="title">MemoMix</h1>
             <div className="menu">
               <h2>Select Difficulty</h2>
               <div className="button-group">
@@ -48,7 +48,7 @@ export default function Home() {
         ) : (
           <div className="game-container">
             <div className="header">
-              <h1 className="title game-title">Memory Match</h1>
+              <h1 className="title game-title">MemoMix</h1>
               <button className="back-button" onClick={() => setGameStarted(false)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M15 18l-6-6 6-6"/>
