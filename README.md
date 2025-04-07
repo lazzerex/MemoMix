@@ -1,4 +1,10 @@
-![image](https://github.com/user-attachments/assets/9b87917a-7452-4871-a907-d3312fe2b203)
+Try it here: https://memomix.vercel.app/
+
+
+![image](https://github.com/user-attachments/assets/bbf0e1b8-8995-4b46-84e5-639501f39899)
+
+![image](https://github.com/user-attachments/assets/f9edb218-8088-436e-812a-233a7211318b)
+
 
 
 
