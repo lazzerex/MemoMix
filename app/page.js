@@ -96,8 +96,7 @@ export default function Home() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           text-shadow: 0 2px 10px rgba(229, 46, 113, 0.2);
-        }
-        
+        }    
         .game-title {
           font-size: 2.5rem;
           margin-bottom: 0;
